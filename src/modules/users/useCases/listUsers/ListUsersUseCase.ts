@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { User } from "@modules/users/entities/User";
-import { removePasswordToUser } from "util/removePasswordToUser";
+import { removePasswordToUser } from "@utils/removePasswordToUser";
 @injectable()
 class ListUsersUseCase {
   constructor(

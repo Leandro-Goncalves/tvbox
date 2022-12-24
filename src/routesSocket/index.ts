@@ -1,4 +1,4 @@
-import { http } from "index";
+import { http } from "../index";
 import { Server } from "socket.io";
 
 import { UserRoutes } from "./user.routes";

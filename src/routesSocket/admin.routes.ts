@@ -2,8 +2,8 @@ import { ListUsersControllerSocket } from "@modules/users/useCases/listUsers/Lis
 import { Namespace, Server } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { container } from "tsyringe";
-import { ensureAdminSocket } from "util/middlewares/ensureAdmin";
-import { ensureAuthenticatedSocket } from "util/middlewares/ensureAuthenticated";
+import { ensureAdminSocket } from "@utils/middlewares/ensureAdmin";
+import { ensureAuthenticatedSocket } from "@utils/middlewares/ensureAuthenticated";
 import { ActionsUser } from "./actions/user";
 import { updateUsers } from "./user.routes";
 

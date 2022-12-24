@@ -11,8 +11,12 @@ export async function ensureAdminSocket(socket: Socket, next: any) {
   const user = await usersRepository.findById(id);
   console.log(id, user);
 
+  if (!user) {
+    return next(new Error("User not found!"));
+  }
+
   if (!user.isAdmin) {
-    next(new Error("User isn't admin!"));
+    return next(new Error("User isn't admin!"));
   }
 
   return next();

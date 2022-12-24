@@ -4,8 +4,10 @@ import "express-async-errors";
 import express, { NextFunction, Request, Response } from "express";
 import Cors from "cors";
 const app = express();
-const http = require("http").Server(app);
+import http from "http";
+const server = http.createServer(app);
 
+import { RouterSocket } from "./routesSocket";
 import { router } from "./routes";
 
 import createConnection from "@shared/typeorm";
@@ -17,7 +19,7 @@ createConnection();
 app.use(express.json());
 app.use(Cors());
 app.use(express.urlencoded({ extended: false }));
-import "./routesSocket";
+RouterSocket(server);
 app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
@@ -32,4 +34,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     message: `Internal server error - ${err.message}`,
   });
 });
-export { http };
+export { server };

@@ -21,7 +21,9 @@ import createConnection from "@shared/typeorm";
 import "./cronActions";
 
 import { AppError } from "@shared/errors/AppError";
+import { startContainer } from "@shared/container";
 
+startContainer();
 createConnection();
 
 app.use(express.json());

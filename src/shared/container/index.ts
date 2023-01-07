@@ -4,14 +4,16 @@ import { UsersRepository } from "@modules/users/repositories/typeorm/UsersReposi
 import { AppVersionRepository } from "@modules/appVersion/repositories/typeorm/AppVersionRepository";
 import { IAppVersionRepository } from "@modules/appVersion/repositories/IAppVersionRepository";
 
-import "./providers";
+export const startContainer = () => {
+  require("./providers");
 
-container.registerSingleton<IUsersRepository>(
-  "UsersRepository",
-  UsersRepository
-);
+  container.registerSingleton<IUsersRepository>(
+    "UsersRepository",
+    UsersRepository
+  );
 
-container.registerSingleton<IAppVersionRepository>(
-  "AppVersionRepository",
-  AppVersionRepository
-);
+  container.registerSingleton<IAppVersionRepository>(
+    "AppVersionRepository",
+    AppVersionRepository
+  );
+};

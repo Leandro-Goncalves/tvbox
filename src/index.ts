@@ -1,3 +1,10 @@
+import { isDev } from "@utils/enviroment";
+import * as path from "path";
+import * as dotenv from "dotenv";
+dotenv.config({
+  path: path.join(__dirname, "../", `.env.${isDev() ? "dev" : "prod"}`),
+});
+
 import "reflect-metadata";
 import "@shared/container";
 import "express-async-errors";
@@ -11,6 +18,7 @@ import { RouterSocket } from "./routesSocket";
 import { router } from "./routes";
 
 import createConnection from "@shared/typeorm";
+import "./cronActions";
 
 import { AppError } from "@shared/errors/AppError";
 

@@ -8,8 +8,6 @@ export const RouterSocket = (server: any) => {
     cors: { origin: "*" },
   });
 
-  console.log(io);
-
   const admin = io.of("/admin");
   AdminRoutes(io, admin);
   UserRoutes(io, admin);

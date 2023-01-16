@@ -42,6 +42,7 @@ const UserRoutes = (
 
     socket.on("disconnect", async () => {
       await actionsUser.updateIsActive(id, false);
+      await actionsUser.updateAppName(id, undefined);
 
       await updateUsers(admin);
       console.log("user disconnected");

@@ -38,6 +38,15 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  async delete(id: string): Promise<boolean> {
+    await this.repository
+      .createQueryBuilder()
+      .delete()
+      .where("id = :id", { id })
+      .execute();
+    return true;
+  }
+
   async updateIsActive(id: string, isActive: boolean): Promise<UpdateResult> {
     const updateResult = await this.repository.update(id, { isActive });
 

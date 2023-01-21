@@ -22,6 +22,7 @@ import "./cronActions";
 
 import { AppError } from "@shared/errors/AppError";
 import { startContainer } from "@shared/container";
+import Youch from "youch";
 
 startContainer();
 createConnection();
@@ -32,16 +33,23 @@ app.use(express.urlencoded({ extended: false }));
 RouterSocket(server);
 app.use(router);
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       message: err.message,
     });
   }
 
+  if (isDev()) {
+    const youch = new Youch(err, req);
+    const html = await youch.toHTML();
+    res.append("content-type", "text/html");
+    return res.send(html);
+  }
+
   return res.status(500).json({
     status: "error",
-    message: `Internal server error - ${err.message}`,
+    message: `Internal server error`,
   });
 });
 export { server };

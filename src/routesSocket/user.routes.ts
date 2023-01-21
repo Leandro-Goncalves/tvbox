@@ -16,6 +16,7 @@ const UserRoutes = (
   io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
   admin: Namespace<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
 ) => {
+  global.socketAdmin = admin;
   io.use(ensureAuthenticatedSocket);
 
   io.on("connection", async (socket) => {

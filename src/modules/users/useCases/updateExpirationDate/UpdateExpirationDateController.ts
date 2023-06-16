@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { container } from "tsyringe";
 
 import { UpdateExpirationDateUseCase } from "./UpdateExpirationDateUseCase";
-import { updateUsers } from "routesSocket/user.routes";
+import { updateUsers } from "../../../../routesSocket/user.routes";
 
 class UpdateExpirationDateController {
   static async handle(req: Request, res: Response): Promise<Response> {

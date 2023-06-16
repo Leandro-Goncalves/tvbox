@@ -3,6 +3,7 @@ import { DeleteUserController } from "@modules/users/useCases/deleteUser/DeleteU
 import { Router } from "express";
 import { ensureAdmin } from "@utils/middlewares/ensureAdmin";
 import { ensureAuthenticated } from "@utils/middlewares/ensureAuthenticated";
+import { UpdateExpirationDateController } from "@modules/users/useCases/updateExpirationDate/UpdateExpirationDateController";
 
 const adminRoutes = Router();
 
@@ -18,6 +19,13 @@ adminRoutes.delete(
   ensureAuthenticated,
   ensureAdmin,
   DeleteUserController.handle
+);
+
+adminRoutes.post(
+  "/updateExpirationDate/:id",
+  ensureAuthenticated,
+  ensureAdmin,
+  UpdateExpirationDateController.handle
 );
 
 export { adminRoutes };

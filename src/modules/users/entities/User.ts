@@ -28,6 +28,9 @@ class User {
   date: Date;
 
   @CreateDateColumn()
+  expirationDate: Date;
+
+  @CreateDateColumn()
   created_at: Date;
 
   constructor() {

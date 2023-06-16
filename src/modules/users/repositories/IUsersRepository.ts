@@ -11,6 +11,7 @@ interface IUsersRepository {
   updateIsActive(id: string, isActive: boolean): Promise<UpdateResult>;
   updateIsBlocked(id: string, isActive: boolean): Promise<UpdateResult>;
   updateAppName(id: string, appName: string): Promise<UpdateResult>;
+  updateExpirationDate(id: string, months: number): Promise<void>;
 }
 
 export { IUsersRepository };

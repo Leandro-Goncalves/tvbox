@@ -2,6 +2,7 @@ import { ICreateUserDTO } from "modules/users/dtos/ICreateUserDTO";
 import { User } from "@modules/users/entities/User";
 import { getRepository, Repository, UpdateResult } from "typeorm";
 import { IUsersRepository } from "../IUsersRepository";
+import { add } from "date-fns";
 
 class UsersRepository implements IUsersRepository {
   private repository: Repository<User>;
@@ -10,10 +11,15 @@ class UsersRepository implements IUsersRepository {
     this.repository = getRepository(User);
   }
   async create({ id, name, password }: ICreateUserDTO): Promise<void> {
+    const expirationDate = add(new Date(), {
+      months: 6,
+    });
+
     const user = this.repository.create({
       id,
       name,
       password,
+      expirationDate,
     });
 
     await this.repository.save(user);
@@ -64,6 +70,14 @@ class UsersRepository implements IUsersRepository {
     });
 
     return updateResult;
+  }
+
+  async updateExpirationDate(id: string, months: number): Promise<void> {
+    const { expirationDate } = await this.repository.findOne(id);
+
+    await this.repository.update(id, {
+      expirationDate: add(expirationDate, { months }),
+    });
   }
 }
 

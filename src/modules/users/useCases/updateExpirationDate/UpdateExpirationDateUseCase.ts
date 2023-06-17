@@ -8,8 +8,8 @@ class UpdateExpirationDateUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(id: string, months: number) {
-    await this.usersRepository.updateExpirationDate(id, months);
+  async execute(id: string, months?: number, days?: number) {
+    await this.usersRepository.updateExpirationDate(id, months, days);
   }
 }
 

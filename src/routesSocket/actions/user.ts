@@ -17,6 +17,12 @@ class ActionsUser {
     return users.isBlocked;
   }
 
+  async expirationDate(id: string): Promise<Date> {
+    const user = await this.usersRepository.findById(id);
+
+    return user.expirationDate;
+  }
+
   async updateIsActive(id: string, isActive: boolean): Promise<UpdateResult> {
     const users = await this.usersRepository.updateIsActive(id, isActive);
 

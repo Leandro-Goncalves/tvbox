@@ -4,6 +4,7 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { container } from "tsyringe";
 import { ensureAuthenticatedSocket } from "@utils/middlewares/ensureAuthenticated";
 import { ActionsUser } from "./actions/user";
+import { isBefore } from "date-fns";
 
 export const updateUsers = async (
   admin: Namespace<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
@@ -29,6 +30,19 @@ const UserRoutes = (
     if (userIsBlocked) {
       socket.emit("reboot");
       return;
+    }
+
+    const expirationDate = await actionsUser.expirationDate(id);
+    if (expirationDate) {
+      socket.emit("expirationDate", expirationDate);
+
+      const isExpired = isBefore(expirationDate, new Date());
+
+      if (isExpired) {
+        setTimeout(() => {
+          socket.emit("reboot");
+        }, 30 * 1000); // 30 seconds
+      }
     }
 
     await actionsUser.updateIsActive(id, true);

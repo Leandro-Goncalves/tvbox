@@ -72,11 +72,15 @@ class UsersRepository implements IUsersRepository {
     return updateResult;
   }
 
-  async updateExpirationDate(id: string, months: number): Promise<void> {
+  async updateExpirationDate(
+    id: string,
+    months?: number,
+    days?: number
+  ): Promise<void> {
     const { expirationDate } = await this.repository.findOne(id);
 
     await this.repository.update(id, {
-      expirationDate: add(expirationDate, { months }),
+      expirationDate: add(expirationDate, { months, days }),
     });
   }
 }

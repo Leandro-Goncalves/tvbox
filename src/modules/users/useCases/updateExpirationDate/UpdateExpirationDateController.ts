@@ -7,12 +7,12 @@ import { updateUsers } from "../../../../routesSocket/user.routes";
 class UpdateExpirationDateController {
   static async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { months } = req.body;
+    const { months, days } = req.body;
     const updateExpirationDateUseCase = container.resolve(
       UpdateExpirationDateUseCase
     );
 
-    await updateExpirationDateUseCase.execute(id, months);
+    await updateExpirationDateUseCase.execute(id, months, days);
 
     if (global.socketAdmin) {
       updateUsers(global.socketAdmin);

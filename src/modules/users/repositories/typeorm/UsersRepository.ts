@@ -11,15 +11,11 @@ class UsersRepository implements IUsersRepository {
     this.repository = getRepository(User);
   }
   async create({ id, name, password }: ICreateUserDTO): Promise<void> {
-    const expirationDate = add(new Date(), {
-      months: 6,
-    });
-
     const user = this.repository.create({
       id,
       name,
       password,
-      expirationDate,
+      expirationDate: new Date(),
     });
 
     await this.repository.save(user);

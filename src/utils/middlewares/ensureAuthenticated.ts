@@ -5,7 +5,7 @@ import auth from "@configs/auth";
 import { AppError } from "@shared/errors/AppError";
 import { Socket } from "socket.io";
 import { container } from "tsyringe";
-import { ActionsUser } from "routesSocket/actions/user";
+import { ActionsUser } from "../../routesSocket/actions/user";
 
 interface IPayload {
   sub: string;

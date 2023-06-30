@@ -4,7 +4,6 @@ import { verify } from "jsonwebtoken";
 import auth from "@configs/auth";
 import { AppError } from "@shared/errors/AppError";
 import { Socket } from "socket.io";
-import { container } from "tsyringe";
 import { ActionsUser } from "../../routesSocket/actions/user";
 
 interface IPayload {
@@ -19,7 +18,7 @@ export async function ensureAuthenticatedSocket(socket: Socket, next: any) {
       function (err, decoded: { sub: string }) {
         if (err || !decoded) return next(new Error("Authentication error"));
 
-        const actionsUser = container.resolve(ActionsUser);
+        const actionsUser = new ActionsUser();
         actionsUser.findById(decoded.sub).then((user) => {
           if (!user) return next(new Error("User not found!"));
           socket.data = { id: decoded.sub };

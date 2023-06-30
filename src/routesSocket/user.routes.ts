@@ -1,7 +1,6 @@
 import { ListUsersControllerSocket } from "@modules/users/useCases/listUsers/ListUsersControllerSocket";
 import { Namespace, Server } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import { container } from "tsyringe";
 import { ensureAuthenticatedSocket } from "@utils/middlewares/ensureAuthenticated";
 import { ActionsUser } from "./actions/user";
 import { isBefore } from "date-fns";
@@ -21,7 +20,7 @@ const UserRoutes = (
   io.use(ensureAuthenticatedSocket);
 
   io.on("connection", async (socket) => {
-    const actionsUser = container.resolve(ActionsUser);
+    const actionsUser = new ActionsUser();
     const { sub: id } = socket.data;
     console.log("a user connected", id);
     socket.join(id);

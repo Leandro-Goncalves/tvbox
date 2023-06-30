@@ -1,7 +1,6 @@
 import { ListUsersControllerSocket } from "@modules/users/useCases/listUsers/ListUsersControllerSocket";
 import { Namespace, Server } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import { container } from "tsyringe";
 import { ensureAdminSocket } from "@utils/middlewares/ensureAdmin";
 import { ensureAuthenticatedSocket } from "@utils/middlewares/ensureAuthenticated";
 import { ActionsUser } from "./actions/user";
@@ -15,7 +14,7 @@ const AdminRoutes = (
   admin.use(ensureAdminSocket);
 
   admin.on("connection", (socket) => {
-    const actionsUser = container.resolve(ActionsUser);
+    const actionsUser = new ActionsUser();
 
     socket.on("getUsers", async (callback) => {
       const users = await ListUsersControllerSocket.handle();

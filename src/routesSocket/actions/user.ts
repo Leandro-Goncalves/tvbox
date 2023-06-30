@@ -1,15 +1,13 @@
-import { inject, injectable } from "tsyringe";
-
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { UpdateResult } from "typeorm";
 import { User } from "@modules/users/entities/User";
+import { UsersRepository } from "@modules/users/repositories/typeorm/UsersRepository";
 
-@injectable()
 class ActionsUser {
-  constructor(
-    @inject("UsersRepository")
-    private usersRepository: IUsersRepository
-  ) {}
+  private usersRepository: IUsersRepository;
+  constructor() {
+    this.usersRepository = new UsersRepository();
+  }
 
   async isBLocked(id: string): Promise<boolean> {
     const users = await this.usersRepository.findById(id);

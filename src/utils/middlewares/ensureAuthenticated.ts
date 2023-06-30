@@ -4,6 +4,8 @@ import { verify } from "jsonwebtoken";
 import auth from "@configs/auth";
 import { AppError } from "@shared/errors/AppError";
 import { Socket } from "socket.io";
+import { container } from "tsyringe";
+import { ActionsUser } from "routesSocket/actions/user";
 
 interface IPayload {
   sub: string;
@@ -14,10 +16,15 @@ export async function ensureAuthenticatedSocket(socket: Socket, next: any) {
     verify(
       socket.handshake.query.token as string,
       auth.secret_token,
-      function (err, decoded) {
+      function (err, decoded: { sub: string }) {
         if (err || !decoded) return next(new Error("Authentication error"));
-        socket.data = decoded as { id: string };
-        next();
+
+        const actionsUser = container.resolve(ActionsUser);
+        actionsUser.findById(decoded.sub).then((user) => {
+          if (!user) return next(new Error("User not found!"));
+          socket.data = { id: decoded.sub };
+          next();
+        });
       }
     );
   } else {

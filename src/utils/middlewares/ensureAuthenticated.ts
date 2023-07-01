@@ -21,7 +21,7 @@ export async function ensureAuthenticatedSocket(socket: Socket, next: any) {
         const actionsUser = new ActionsUser();
         actionsUser.findById(decoded.sub).then((user) => {
           if (!user) return next(new Error("User not found!"));
-          socket.data = { id: decoded.sub };
+          socket.data = { sub: decoded.sub };
           next();
         });
       }

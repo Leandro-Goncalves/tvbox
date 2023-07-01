@@ -1,4 +1,4 @@
-import { ICreateUserDTO } from "modules/users/dtos/ICreateUserDTO";
+import { ICreateUserDTO } from "@modules/users/dtos/ICreateUserDTO";
 import { User } from "@modules/users/entities/User";
 import { getRepository, Repository, UpdateResult } from "typeorm";
 import { IUsersRepository } from "../IUsersRepository";

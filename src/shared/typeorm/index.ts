@@ -6,8 +6,8 @@ export default async (): Promise<Connection> => {
   console.log("defaultOptions2", defaultOptions);
   return createConnection(
     Object.assign(defaultOptions, {
-      migrations: defaultOptions.migrations.map((migration) => {
-        const p = path.join(__dirname, "migrations", migration as string);
+      entities: defaultOptions.entities.map((migration) => {
+        const p = path.join(__dirname, migration as string);
         console.log("p", p);
         return p;
       }),

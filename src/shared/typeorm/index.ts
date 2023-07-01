@@ -1,16 +1,13 @@
 import { Connection, createConnection, getConnectionOptions } from "typeorm";
-import path from "path";
+import { User } from "@modules/users/entities/User";
+import { AppVersion } from "@modules/appVersion/entities/AppVersion";
 
 export default async (): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
   console.log("defaultOptions2", defaultOptions);
   return createConnection(
     Object.assign(defaultOptions, {
-      entities: defaultOptions.entities.map((migration) => {
-        const p = path.join(__dirname, migration as string);
-        console.log("p", p);
-        return p;
-      }),
+      entities: [User, AppVersion],
       database:
         process.env.NODE_ENV === "test"
           ? "database_test"
